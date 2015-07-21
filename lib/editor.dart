@@ -8,7 +8,6 @@ import 'package:upcom-api/ros/ros.dart';
 import 'package:upcom-api/tab.dart';
 import 'package:upcom-api/updroid_message.dart';
 import 'package:upcom-api/server_message.dart';
-import 'package:upcom-api/server_helper.dart' as help;
 
 class CmdrEditor extends Tab {
   Directory uproot;
@@ -67,8 +66,4 @@ class CmdrEditor extends Tab {
   void cleanup() {
 
   }
-}
-
-void main(List args, SendPort interfacesSendPort) {
-  Tab.main(interfacesSendPort, args, (id, path, port, args) => new CmdrEditor(id, path, port));
 }
