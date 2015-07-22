@@ -17,7 +17,6 @@ class CmdrEditor extends Tab {
   CmdrEditor(int id, String workspacePath, SendPort sp) :
   super(id, 'UpDroidEditor', sp) {
     uproot = new Directory(workspacePath);
-    mailbox.send(new Msg('TAB_READY'));
   }
 
   void registerMailbox() {
