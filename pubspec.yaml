@@ -9,3 +9,4 @@ environment:
 dependencies:
   upcom-api:
     path: /home/crunchex/work/upcom-api/
+  ace: '0.6.1+3.3.15'
