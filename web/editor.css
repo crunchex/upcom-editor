@@ -1,0 +1,11 @@
+.updroideditor {
+    width: 100%;
+    height: 100%;
+}
+
+.ace_editor.updroid_editor,
+.ace_editor.updroid_editor {
+    width: 100%;
+    height: 100%;
+    font-family: "Monosten A", "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
+}
