@@ -65,8 +65,7 @@ class UpDroidEditor extends TabController {
   String _openFilePath, _originalContents;
   bool _exec;
 
-  UpDroidEditor(int id, int col) :
-  super(id, col, className, 'Editor', getMenuConfig(), 'http://localhost:12060/tabs/upcom-editor/editor.css') {
+  UpDroidEditor() : super(className, 'Editor', getMenuConfig(), 'http://localhost:12060/tabs/upcom-editor/editor.css') {
 
   }
 
