@@ -4,10 +4,8 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:upcom-api/ros/ros.dart';
-import 'package:upcom-api/tab.dart';
-import 'package:upcom-api/updroid_message.dart';
-import 'package:upcom-api/server_message.dart';
+import 'package:upcom-api/tab_backend.dart';
+import 'package:upcom-api/ros.dart';
 
 class CmdrEditor extends Tab {
   Directory uproot;

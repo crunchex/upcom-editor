@@ -4,13 +4,10 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:upcom-api/tab_frontend.dart';
 import 'package:ace/proxy.dart';
 import 'package:ace/ace.dart' as ace;
 import "package:path/path.dart" as pathLib;
-
-import 'package:upcom-api/web/mailbox/mailbox.dart';
-import 'package:upcom-api/web/tab/tab_controller.dart';
-import 'package:upcom-api/web/modal/modal.dart';
 
 part 'templates.dart';
 
