@@ -55,6 +55,7 @@ class UpDroidEditor extends TabController {
   AnchorElement _blankButton, _launchButton, _talkerButton, _listenerButton, _pubButton, _subButton;
   AnchorElement _saveButton, _saveAsButton;
   InputElement _fontSizeInput;
+  ScriptElement _aceJs;
 
   // Stream Subscriptions.
   List<StreamSubscription> _subs;
@@ -65,8 +66,8 @@ class UpDroidEditor extends TabController {
   String _openFilePath, _originalContents;
   bool _exec;
 
-  UpDroidEditor() : super(className, 'Editor', getMenuConfig(), 'http://localhost:12060/tabs/upcom-editor/editor.css') {
-
+  UpDroidEditor(ScriptElement script) : super(className, 'Editor', getMenuConfig(), 'http://localhost:12060/tabs/upcom-editor/editor.css') {
+    _aceJs = script;
   }
 
   void setUpController() {
@@ -370,5 +371,6 @@ class UpDroidEditor extends TabController {
   void cleanUp() {
     _subs.forEach((StreamSubscription sub) => sub.cancel());
     if (_fontInputListener != null) _fontInputListener.cancel();
+    _aceJs.remove();
   }
 }

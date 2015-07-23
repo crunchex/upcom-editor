@@ -8,6 +8,6 @@ void main() {
   document.body.children.add(aceJs);
 
   aceJs.onLoad.first.then((_) {
-    new UpDroidEditor();
+    new UpDroidEditor(aceJs);
   });
 }
