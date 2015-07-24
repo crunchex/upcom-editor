@@ -23,7 +23,13 @@ fi
 cd $TOPDIR/web
 rm -rf ace-builds
 
-# Run the build
+# Build front-end -> build/web
 cd $TOPDIR
 pub get
 pub build
+
+# Build back-end -> build/bin
+BUILDBIN=$TOPDIR/build/bin
+mkdir -p $BUILDBIN
+dart2js --output-type=dart --categories=Server --minify -o $BUILDBIN/main.dart $TOPDIR/bin/main.dart
+rm -rf $BUILDBIN/main.dart.deps
