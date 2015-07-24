@@ -33,3 +33,6 @@ BUILDBIN=$TOPDIR/build/bin
 mkdir -p $BUILDBIN
 dart2js --output-type=dart --categories=Server --minify -o $BUILDBIN/main.dart $TOPDIR/bin/main.dart
 rm -rf $BUILDBIN/main.dart.deps
+
+# Copy over tabinfo.json -> build/bin
+cp $TOPDIR/lib/tabinfo.json $BUILDBIN
