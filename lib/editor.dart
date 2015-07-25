@@ -11,9 +11,10 @@ class CmdrEditor extends Tab {
   Directory uproot;
 
   Workspace _currentWorkspace;
+  final String _explorerRefName = 'upcom-explorer';
 
   CmdrEditor(int id, String workspacePath, SendPort sp) :
-  super(id, 'UpDroidEditor', sp) {
+  super(id, 'upcom-editor', 'UpDroid Editor', 'Editor', sp) {
     uproot = new Directory(workspacePath);
   }
 
@@ -49,7 +50,7 @@ class CmdrEditor extends Tab {
 
   void _requestSelected(String um) {
     Msg newMessage = new Msg('REQUEST_SELECTED', id.toString());
-    mailbox.relay('UpDroidExplorer', -1, newMessage);
+    mailbox.relay(_explorerRefName, -1, newMessage);
   }
 
   void _setCurrentWorkspace(String um) {

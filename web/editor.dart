@@ -14,8 +14,6 @@ part 'templates.dart';
 /// [UpDroidEditor] is a wrapper for an embedded Ace Editor. Sets styles
 /// for the editor and an additional menu bar with some filesystem operations.
 class UpDroidEditor extends TabController {
-  static String className = 'UpDroidEditor';
-
   static List<String> getThemes() {
     return ace.Theme.THEMES.where((String s) {
       return s != 'chrome' && s != 'clouds' && s != 'dreamweaver' && s != 'xcode' && s != 'textmate'
@@ -63,7 +61,7 @@ class UpDroidEditor extends TabController {
   String _openFilePath, _originalContents;
   bool _exec;
 
-  UpDroidEditor(ScriptElement script) : super(className, 'Editor', getMenuConfig(), 'http://localhost:12060/tabs/upcom-editor/editor.css') {
+  UpDroidEditor(ScriptElement script) : super('upcom-editor', 'UpDroid Editor', 'Editor', getMenuConfig(), 'http://localhost:12060/tabs/upcom-editor/editor.css') {
     _aceJs = script;
   }
 
@@ -84,7 +82,7 @@ class UpDroidEditor extends TabController {
 
     DivElement aceDiv = new DivElement()
     // Necessary to allow our styling (in main.css) to override Ace's.
-      ..classes.add('updroid_editor');
+      ..classes.add('upcom-editor');
     view.content.children.add(aceDiv);
 
     _aceEditor = ace.edit(aceDiv)
@@ -325,7 +323,7 @@ class UpDroidEditor extends TabController {
   void _saveFile() {
     if (_openFilePath == null || _openFilePath == '') return;
 
-    mailbox.ws.send('[[SAVE_FILE]]' + JSON.encode([_aceEditor.value, _openFilePath, _exec]));
+    mailbox.ws.send(new UpDroidMessage('SAVE_FILE', JSON.encode([_aceEditor.value, _openFilePath, _exec])).s);
     _resetSavePoint();
   }
 
