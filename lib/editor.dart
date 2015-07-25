@@ -49,7 +49,7 @@ class CmdrEditor extends Tab {
 
   void _requestSelected(String um) {
     Msg newMessage = new Msg('REQUEST_SELECTED', id.toString());
-    mailbox.relay(new ServerMessage('UpDroidExplorer', -1, newMessage));
+    mailbox.relay('UpDroidExplorer', -1, newMessage);
   }
 
   void _setCurrentWorkspace(String um) {
