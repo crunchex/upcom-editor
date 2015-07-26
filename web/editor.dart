@@ -130,7 +130,7 @@ class UpDroidEditor extends TabController {
   // Mailbox Handlers
 
   /// Editor receives the open file contents from the server.
-  void _openFileHandler(UpDroidMessage um) {
+  void _openFileHandler(Msg um) {
     List<String> returnedData = um.body.split('[[CONTENTS]]');
     String newPath = returnedData[0];
     String newText = returnedData[1];
@@ -249,7 +249,7 @@ class UpDroidEditor extends TabController {
   Future<String> _getSelectedPath() async {
     Completer c = new Completer();
 
-    UpDroidMessage um = await mailbox.waitFor(new UpDroidMessage('REQUEST_SELECTED', ''));
+    Msg um = await mailbox.waitFor(new Msg('REQUEST_SELECTED', ''));
     List<String> selectedPaths = JSON.decode(um.body);
     if (selectedPaths.length != 1) {
       c.complete(null);
@@ -323,7 +323,7 @@ class UpDroidEditor extends TabController {
   void _saveFile() {
     if (_openFilePath == null || _openFilePath == '') return;
 
-    mailbox.ws.send(new UpDroidMessage('SAVE_FILE', JSON.encode([_aceEditor.value, _openFilePath, _exec])).s);
+    mailbox.ws.send(new Msg('SAVE_FILE', JSON.encode([_aceEditor.value, _openFilePath, _exec])).toString());
     _resetSavePoint();
   }
 
