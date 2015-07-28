@@ -354,7 +354,7 @@ class UpDroidEditor extends TabController {
       view.extra.text = pathLib.basename(_openFilePath);
     }
 
-    view.tabHandleButton.title = view.extra.text;
+    hoverText = view.extra.text;
   }
 
   Element get elementToFocus => view.content.children[0].querySelector('.ace_text-input');
