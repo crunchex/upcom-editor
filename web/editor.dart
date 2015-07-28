@@ -14,6 +14,8 @@ part 'templates.dart';
 /// [UpDroidEditor] is a wrapper for an embedded Ace Editor. Sets styles
 /// for the editor and an additional menu bar with some filesystem operations.
 class UpDroidEditor extends TabController {
+  static final List<String> names = ['upcom-editor', 'UpDroid Editor', 'Editor'];
+
   static List<String> getThemes() {
     return ace.Theme.THEMES.where((String s) {
       return s != 'chrome' && s != 'clouds' && s != 'dreamweaver' && s != 'xcode' && s != 'textmate'
@@ -61,7 +63,8 @@ class UpDroidEditor extends TabController {
   String _openFilePath, _originalContents;
   bool _exec;
 
-  UpDroidEditor(ScriptElement script) : super('upcom-editor', 'UpDroid Editor', 'Editor', getMenuConfig(), 'tabs/upcom-editor/editor.css') {
+  UpDroidEditor(ScriptElement script) :
+  super(UpDroidEditor.names, getMenuConfig(), 'tabs/upcom-editor/editor.css') {
     _aceJs = script;
   }
 
