@@ -8,14 +8,16 @@ import 'package:upcom-api/tab_backend.dart';
 import 'package:upcom-api/ros.dart';
 
 class CmdrEditor extends Tab {
+  static final List<String> names = ['upcom-editor', 'UpDroid Editor', 'Editor'];
+
   Directory uproot;
 
   Workspace _currentWorkspace;
   final String _explorerRefName = 'upcom-explorer';
 
-  CmdrEditor(int id, String workspacePath, SendPort sp) :
-  super(id, 'upcom-editor', 'UpDroid Editor', 'Editor', sp) {
-    uproot = new Directory(workspacePath);
+  CmdrEditor(SendPort sp, List args) :
+  super(CmdrEditor.names, sp, args) {
+    uproot = new Directory(args[2]);
   }
 
   void registerMailbox() {
