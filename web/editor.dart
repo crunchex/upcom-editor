@@ -61,7 +61,7 @@ class UpDroidEditor extends TabController {
   String _openFilePath, _originalContents;
   bool _exec;
 
-  UpDroidEditor(ScriptElement script) : super('upcom-editor', 'UpDroid Editor', 'Editor', getMenuConfig(), 'http://localhost:12060/tabs/upcom-editor/editor.css') {
+  UpDroidEditor(ScriptElement script) : super('upcom-editor', 'UpDroid Editor', 'Editor', getMenuConfig(), 'tabs/upcom-editor/editor.css') {
     _aceJs = script;
   }
 
