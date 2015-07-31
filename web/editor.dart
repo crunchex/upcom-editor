@@ -205,17 +205,17 @@ class UpDroidEditor extends TabController {
 
   /// Adds an asterisk to the displayed filename if there are any unsaved changes.
   void _updateUnsavedChangesIndicator() {
-    bool noUnsavedChanges = _noUnsavedChanges();
-    print('noUnsavedChanges: ${noUnsavedChanges.toString()}');
-    print('ace text: ${_aceEditor.value} ==  original text: ${_originalContents}');
-    if (noUnsavedChanges) {
-      if (view.extra.text.contains('*')) view.extra.text = view.extra.text.substring(0, view.extra.text.length - 1);
+    if (_noUnsavedChanges()) {
+      if (view.extra.text.contains('*')) {
+        view.extra.text = view.extra.text.substring(0, view.extra.text.length - 1);
+      }
       return;
     }
 
-    print('adding *');
-    if (!view.extra.text.contains('*')) view.extra.text = view.extra.text + '*';
-    print('new view.extra.text: ${view.extra.text}');
+
+    if (!view.extra.text.contains('*')) {
+      view.extra.text = view.extra.text + '*';
+    }
   }
 
   // Misc Private Methods
@@ -335,8 +335,8 @@ class UpDroidEditor extends TabController {
     if (_openFilePath == null || _openFilePath == '') return;
 
     mailbox.ws.send(new Msg('SAVE_FILE', JSON.encode([_aceEditor.value, _openFilePath, _exec])).toString());
-    _updateUnsavedChangesIndicator();
     _resetSavePoint();
+    _updateUnsavedChangesIndicator();
   }
 
   /// Sets the Editor's text with [newText], and resets other stuff.
