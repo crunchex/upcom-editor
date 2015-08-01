@@ -140,7 +140,10 @@ class UpDroidEditor extends TabController {
 
     _handleAnyChanges().then((_) {
       _updateOpenFilePath(newPath);
+
+      // Set the Editor text before resetting the save point.
       _setEditorText(newText);
+      _resetSavePoint();
     });
   }
 
@@ -151,7 +154,9 @@ class UpDroidEditor extends TabController {
 
     _handleAnyChanges().then((_) {
       _updateOpenFilePath(null);
+      _resetSavePoint();
       _setEditorText(newText);
+      _updateUnsavedChangesIndicator();
     });
   }
 
@@ -343,7 +348,6 @@ class UpDroidEditor extends TabController {
   void _setEditorText(String newText) {
     _aceEditor.setValue(newText, 1);
     _exec = false;
-    _resetSavePoint();
 
     // Set focus to the interactive area so the user can typing immediately.
     _aceEditor.focus();
