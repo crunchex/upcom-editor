@@ -24,6 +24,7 @@ class CmdrEditor extends Tab {
     mailbox.registerMessageHandler('SAVE_FILE', _saveFile);
     mailbox.registerMessageHandler('REQUEST_SELECTED', _requestSelected);
     mailbox.registerMessageHandler('OPEN_FILE', _openFile);
+    mailbox.registerMessageHandler('OPEN_TEXT', _openText);
     mailbox.registerMessageHandler('SET_CURRENT_WORKSPACE', _setCurrentWorkspace);
     mailbox.registerMessageHandler('RETURN_SELECTED', _returnSelected);
   }
@@ -33,6 +34,10 @@ class CmdrEditor extends Tab {
     fileToOpen.readAsString().then((String contents) {
       mailbox.send(new Msg('OPEN_FILE', um + '[[CONTENTS]]' + contents));
     });
+  }
+
+  void _openText(String um) {
+    mailbox.send(new Msg('OPEN_FILE', um + '[[CONTENTS]]' + um));
   }
 
   void _saveFile(String um) {
