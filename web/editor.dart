@@ -103,6 +103,7 @@ class UpDroidEditor extends TabController {
 
   void registerMailbox() {
     mailbox.registerWebSocketEvent(EventType.ON_MESSAGE, 'OPEN_FILE', _openFileHandler);
+    mailbox.registerWebSocketEvent(EventType.ON_MESSAGE, 'OPEN_TEXT', _openTextHandler);
   }
 
   void registerEventHandlers() {
@@ -137,6 +138,20 @@ class UpDroidEditor extends TabController {
     List<String> returnedData = um.body.split('[[CONTENTS]]');
     String newPath = returnedData[0];
     String newText = returnedData[1];
+
+    _handleAnyChanges().then((_) {
+      _updateOpenFilePath(newPath);
+
+      // Set the Editor text before resetting the save point.
+      _setEditorText(newText);
+      _resetSavePoint();
+    });
+  }
+
+  /// Editor receives the open file contents from the server.
+  void _openTextHandler(Msg um) {
+    String newPath = '';
+    String newText = um.body;
 
     _handleAnyChanges().then((_) {
       _updateOpenFilePath(newPath);

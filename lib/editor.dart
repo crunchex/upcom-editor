@@ -37,7 +37,7 @@ class CmdrEditor extends Tab {
   }
 
   void _openText(String um) {
-    mailbox.send(new Msg('OPEN_FILE', um + '[[CONTENTS]]' + um));
+    mailbox.send(new Msg('OPEN_TEXT', um));
   }
 
   void _saveFile(String um) {
