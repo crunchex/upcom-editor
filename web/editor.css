@@ -1,11 +1,31 @@
 .upcom-editor {
     width: 100%;
     height: 100%;
+    background-color: #eaecec;
 }
 
 .ace_editor.upcom-editor,
 .ace_editor.upcom-editor {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 32px);
     font-family: "Monosten A", "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
+}
+
+.toolbar {
+    width: 100%;
+    padding: 5px;
+    vertical-align: middle;
+    border-top: 1px solid #e3e3e3;
+    font-size: 16px;
+}
+
+.toolbar>span {
+    float: right;
+    padding: 0 5px 0 5px;
+    cursor: pointer;
+}
+
+.toolbar>span.inactive {
+    color: #7e7e7e;
+    cursor: default;
 }

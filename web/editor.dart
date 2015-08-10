@@ -40,6 +40,9 @@ class UpDroidEditor extends TabController {
         {'type': 'toggle', 'title': 'Save'},
         {'type': 'toggle', 'title': 'Save As'},
         {'type': 'toggle', 'title': 'Close Tab'}]},
+      {'title': 'Controls', 'items': [
+        {'type': 'toggle', 'title': 'Run File as Script'},
+        {'type': 'toggle', 'title': 'Stop Script'}]},
       {'title': 'Settings', 'items': [
         {'type': 'submenu', 'title': 'Theme...', 'items': prettyThemeNames()},
         {'type': 'input', 'title': 'Font Size'}]}
@@ -50,7 +53,9 @@ class UpDroidEditor extends TabController {
   static const int _defaultFontSize = 12;
 
   AnchorElement _blankButton, _launchButton, _talkerButton, _listenerButton, _pubButton, _subButton;
+  AnchorElement _runFileAsScriptButton, _stopScriptButton;
   AnchorElement _saveButton, _saveAsButton;
+  SpanElement _playButton, _stopButton;
   InputElement _fontSizeInput;
   ScriptElement _aceJs;
 
@@ -75,6 +80,8 @@ class UpDroidEditor extends TabController {
     _launchButton = view.refMap['basic-launch-file-button'];
     _talkerButton = view.refMap['hello-world-talker-button'];
     _listenerButton = view.refMap['hello-world-listener-button'];
+    _runFileAsScriptButton = view.refMap['run-file-as-script'];
+    _stopScriptButton = view.refMap['stop-script'];
     _saveButton = view.refMap['save'];
     _saveAsButton = view.refMap['save-as'];
     _fontSizeInput = view.refMap['font-size'];
@@ -99,6 +106,20 @@ class UpDroidEditor extends TabController {
     _updateOpenFilePath(null);
     _exec = false;
     _resetSavePoint();
+
+    // Set up the toolbar.
+    DivElement toolbar = new DivElement()
+      ..classes.add('toolbar');
+    view.content.children.add(toolbar);
+
+    _playButton = new SpanElement()
+      ..title = 'Run Node'
+      ..classes.addAll(['glyphicons', 'glyphicons-play']);
+    _stopButton = new SpanElement()
+      ..title = 'Stop Node'
+      ..classes.addAll(['glyphicons', 'glyphicons-stop']);
+
+    toolbar.children.addAll([_stopButton, _playButton]);
   }
 
   void registerMailbox() {
@@ -109,6 +130,7 @@ class UpDroidEditor extends TabController {
   void registerEventHandlers() {
     _subs = [];
 
+    // File menu.
     _subs.add(_blankButton.onClick.listen((e) => _newFileHandler(e, '')));
     _subs.add(_talkerButton.onClick.listen((e) => _newFileHandler(e, RosTemplates.talkerTemplate)));
     _subs.add(_listenerButton.onClick.listen((e) => _newFileHandler(e, RosTemplates.listenerTemplate)));
@@ -119,6 +141,11 @@ class UpDroidEditor extends TabController {
     _subs.add(_saveButton.onClick.listen((e) => _saveHandler()));
     _subs.add(_saveAsButton.onClick.listen((e) => _saveAsHandler()));
 
+    // Control menu.
+    _subs.add(_runFileAsScriptButton.onClick.listen((e) => _runNode()));
+    _subs.add(_stopScriptButton.onClick.listen((e) => _stopNode()));
+
+    // Settings menu.
 //    _subs.add(_themeButton.onClick.listen((e) => _invertTheme(e)));
     _subs.add(_fontSizeInput.onClick.listen((e) => _updateFontSize(e)));
 
@@ -129,6 +156,10 @@ class UpDroidEditor extends TabController {
       Element fontButton = view.refMap['$mapName-button'];
       _subs.add(fontButton.onClick.listen((e) => _setTheme(e, fontName)));
     });
+
+    // Set up toolbar handlers.
+    _subs.add(_playButton.onClick.listen((e) => _runNode()));
+    _subs.add(_stopButton.onClick.listen((e) => _stopNode()));
   }
 
   // Mailbox Handlers
@@ -237,6 +268,9 @@ class UpDroidEditor extends TabController {
       view.extra.text = view.extra.text + '*';
     }
   }
+
+  void _runNode() => mailbox.ws.send(new Msg('RUN_FILE', _openFilePath).toString());
+  void _stopNode() => mailbox.ws.send(new Msg('STOP_FILE', '').toString());
 
   // Misc Private Methods
 
