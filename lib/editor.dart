@@ -15,6 +15,7 @@ class CmdrEditor extends Tab {
   Directory uproot;
 
   Workspace _currentWorkspace;
+  String _runningNodePath;
   String _runningNodeName;
   Process _runningNode;
   final String _explorerRefName = 'upcom-explorer';
@@ -49,6 +50,12 @@ class CmdrEditor extends Tab {
   void _runFile(String um) {
     String filePath = um;
     File file = new File(normalize(filePath));
+
+    if (_runningNodePath == file.path) {
+      _stopFile('');
+    } else {
+      _runningNodePath = file.path;
+    }
 
     // Make sure the file has execute permissions.
     Process.run("chmod", ["u+x", file.path]).then((result) {
