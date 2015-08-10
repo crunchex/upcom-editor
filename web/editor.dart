@@ -41,7 +41,8 @@ class UpDroidEditor extends TabController {
         {'type': 'toggle', 'title': 'Save As'},
         {'type': 'toggle', 'title': 'Close Tab'}]},
       {'title': 'Controls', 'items': [
-        {'type': 'toggle', 'title': 'Run File as Script'}]},
+        {'type': 'toggle', 'title': 'Run File as Script'},
+        {'type': 'toggle', 'title': 'Stop Script'}]},
       {'title': 'Settings', 'items': [
         {'type': 'submenu', 'title': 'Theme...', 'items': prettyThemeNames()},
         {'type': 'input', 'title': 'Font Size'}]}
@@ -52,7 +53,7 @@ class UpDroidEditor extends TabController {
   static const int _defaultFontSize = 12;
 
   AnchorElement _blankButton, _launchButton, _talkerButton, _listenerButton, _pubButton, _subButton;
-  AnchorElement _runFileAsScriptButton;
+  AnchorElement _runFileAsScriptButton, _stopScriptButton;
   AnchorElement _saveButton, _saveAsButton;
   SpanElement _playButton, _stopButton;
   InputElement _fontSizeInput;
@@ -80,6 +81,7 @@ class UpDroidEditor extends TabController {
     _talkerButton = view.refMap['hello-world-talker-button'];
     _listenerButton = view.refMap['hello-world-listener-button'];
     _runFileAsScriptButton = view.refMap['run-file-as-script'];
+    _stopScriptButton = view.refMap['stop-script'];
     _saveButton = view.refMap['save'];
     _saveAsButton = view.refMap['save-as'];
     _fontSizeInput = view.refMap['font-size'];
@@ -141,6 +143,7 @@ class UpDroidEditor extends TabController {
 
     // Control menu.
     _subs.add(_runFileAsScriptButton.onClick.listen((e) => _runNode()));
+    _subs.add(_stopScriptButton.onClick.listen((e) => _stopNode()));
 
     // Settings menu.
 //    _subs.add(_themeButton.onClick.listen((e) => _invertTheme(e)));
