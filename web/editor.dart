@@ -51,6 +51,7 @@ class UpDroidEditor extends TabController {
 
   AnchorElement _blankButton, _launchButton, _talkerButton, _listenerButton, _pubButton, _subButton;
   AnchorElement _saveButton, _saveAsButton;
+  SpanElement _playButton, _stopButton;
   InputElement _fontSizeInput;
   ScriptElement _aceJs;
 
@@ -99,6 +100,20 @@ class UpDroidEditor extends TabController {
     _updateOpenFilePath(null);
     _exec = false;
     _resetSavePoint();
+
+    // Set up the toolbar.
+    DivElement toolbar = new DivElement()
+      ..classes.add('toolbar');
+    view.content.children.add(toolbar);
+
+    _playButton = new SpanElement()
+      ..title = 'Run Node'
+      ..classes.addAll(['glyphicons', 'glyphicons-play']);
+    _stopButton = new SpanElement()
+      ..title = 'Stop Node'
+      ..classes.addAll(['glyphicons', 'glyphicons-stop']);
+
+    toolbar.children.addAll([_stopButton, _playButton]);
   }
 
   void registerMailbox() {
@@ -129,6 +144,10 @@ class UpDroidEditor extends TabController {
       Element fontButton = view.refMap['$mapName-button'];
       _subs.add(fontButton.onClick.listen((e) => _setTheme(e, fontName)));
     });
+
+    // Set up toolbar handlers.
+    _subs.add(_playButton.onClick.listen((e) => _runNode()));
+    _subs.add(_stopButton.onClick.listen((e) => _stopNode()));
   }
 
   // Mailbox Handlers
@@ -236,6 +255,14 @@ class UpDroidEditor extends TabController {
     if (!view.extra.text.contains('*')) {
       view.extra.text = view.extra.text + '*';
     }
+  }
+
+  void _runNode() {
+
+  }
+
+  void _stopNode() {
+
   }
 
   // Misc Private Methods
