@@ -4,7 +4,9 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:upcom-api/tab_frontend.dart';
+import 'package:upcom-api/web/modal/modal.dart';
+import 'package:upcom-api/web/mailbox/mailbox.dart';
+import 'package:upcom-api/web/tab/tab_controller.dart';
 import 'package:ace/proxy.dart';
 import 'package:ace/ace.dart' as ace;
 import "package:path/path.dart" as pathLib;
@@ -69,22 +71,22 @@ class UpDroidEditor extends TabController {
   bool _exec;
 
   UpDroidEditor(ScriptElement script) :
-  super(UpDroidEditor.names, getMenuConfig(), 'tabs/upcom-editor/editor.css') {
+  super(UpDroidEditor.names, true, true, getMenuConfig()) {
     _aceJs = script;
   }
 
   void setUpController() {
-    _blankButton = view.refMap['blank-button'];
-    _pubButton = view.refMap['publisher-button'];
-    _subButton = view.refMap['subscriber-button'];
-    _launchButton = view.refMap['basic-launch-file-button'];
-    _talkerButton = view.refMap['hello-world-talker-button'];
-    _listenerButton = view.refMap['hello-world-listener-button'];
-    _runFileAsScriptButton = view.refMap['run-file-as-script'];
-    _stopScriptButton = view.refMap['stop-script'];
-    _saveButton = view.refMap['save'];
-    _saveAsButton = view.refMap['save-as'];
-    _fontSizeInput = view.refMap['font-size'];
+    _blankButton = refMap['Blank'];
+    _pubButton = refMap['Publisher'];
+    _subButton = refMap['Subscriber'];
+    _launchButton = refMap['Basic Launch File'];
+    _talkerButton = refMap['Hello World Talker'];
+    _listenerButton = refMap['Hello World Listener'];
+    _runFileAsScriptButton = refMap['Run File as Script'];
+    _stopScriptButton = refMap['Stop Script'];
+    _saveButton = refMap['Save'];
+    _saveAsButton = refMap['Save As'];
+    _fontSizeInput = refMap['Font Size'];
 
     ace.implementation = ACE_PROXY_IMPLEMENTATION;
     ace.BindKey ctrlS = new ace.BindKey(win: "Ctrl-S", mac: "Command-S");
@@ -93,7 +95,7 @@ class UpDroidEditor extends TabController {
     DivElement aceDiv = new DivElement()
     // Necessary to allow our styling (in main.css) to override Ace's.
       ..classes.add('upcom-editor');
-    view.content.children.add(aceDiv);
+    content.children.add(aceDiv);
 
     _aceEditor = ace.edit(aceDiv)
       ..session.mode = new ace.Mode.named(ace.Mode.PYTHON)
@@ -110,7 +112,7 @@ class UpDroidEditor extends TabController {
     // Set up the toolbar.
     DivElement toolbar = new DivElement()
       ..classes.add('toolbar');
-    view.content.children.add(toolbar);
+    content.children.add(toolbar);
 
     _playButton = new SpanElement()
       ..title = 'Run Node'
@@ -153,7 +155,7 @@ class UpDroidEditor extends TabController {
 
     getThemes().forEach((String fontName) {
       String mapName = fontName.toLowerCase().replaceAll('_', '-');
-      Element fontButton = view.refMap['$mapName-button'];
+      Element fontButton = refMap['$mapName-button'];
       _subs.add(fontButton.onClick.listen((e) => _setTheme(e, fontName)));
     });
 
@@ -422,7 +424,7 @@ class UpDroidEditor extends TabController {
     hoverText = view.extra.text;
   }
 
-  Element get elementToFocus => view.content.children[0].querySelector('.ace_text-input');
+  Element get elementToFocus => content.children[0].querySelector('.ace_text-input');
 
   Future<bool> preClose() {
     return _handleAnyChanges().then((_) => true);
