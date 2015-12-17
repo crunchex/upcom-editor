@@ -153,9 +153,8 @@ class UpDroidEditor extends TabController {
 
     _subs.add(_aceEditor.onChange.listen((e) => _updateUnsavedChangesIndicator()));
 
-    getThemes().forEach((String fontName) {
-      String mapName = fontName.toLowerCase().replaceAll('_', '-');
-      Element fontButton = refMap['$mapName-button'];
+    prettyThemeNames().forEach((String fontName) {
+      AnchorElement fontButton = refMap[fontName];
       _subs.add(fontButton.onClick.listen((e) => _setTheme(e, fontName)));
     });
 
@@ -259,15 +258,15 @@ class UpDroidEditor extends TabController {
   /// Adds an asterisk to the displayed filename if there are any unsaved changes.
   void _updateUnsavedChangesIndicator() {
     if (_noUnsavedChanges()) {
-      if (view.extra.text.contains('*')) {
-        view.extra.text = view.extra.text.substring(0, view.extra.text.length - 1);
+      if (extra.text.contains('*')) {
+        extra.text = extra.text.substring(0, extra.text.length - 1);
       }
       return;
     }
 
 
-    if (!view.extra.text.contains('*')) {
-      view.extra.text = view.extra.text + '*';
+    if (!extra.text.contains('*')) {
+      extra.text = extra.text + '*';
     }
   }
 
@@ -416,12 +415,12 @@ class UpDroidEditor extends TabController {
     _openFilePath = newPath;
 
     if (_openFilePath == null || _openFilePath == '') {
-      view.extra.text = 'untitled';
+      extra.text = 'untitled';
     } else {
-      view.extra.text = pathLib.basename(_openFilePath);
+      extra.text = pathLib.basename(_openFilePath);
     }
 
-    hoverText = view.extra.text;
+    hoverText = extra.text;
   }
 
   Element get elementToFocus => content.children[0].querySelector('.ace_text-input');
